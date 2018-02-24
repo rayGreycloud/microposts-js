@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', getPosts);
 // Add post listener
 document.querySelector('.post-submit')
   .addEventListener('click', submitPost);
+// Delete post listner 
+document.querySelector('#posts')
+  .addEventListener('click', deletePost);
 
 // Fetch posts from api and display
 function getPosts() {
@@ -31,7 +34,29 @@ function submitPost() {
       ui.clearFields();
       getPosts();
     })
-    .catch(err => console.log(err));
-    
+    .catch(err => console.log(err));    
+}
+
+// delete post handler 
+function deletePost(e) {
+  // Check for delete class 
+  if (e.target.parentElement.classList.contains('delete')) {
+    // Set id
+    const id = e.target.parentElement.dataset.id;
+    // User confirms delete 
+    if (confirm('Are you sure?')) {
+      // Send request to delete post from db
+      http.delete(`http://localhost:3000/posts/${id}`)
+        .then(data => {
+          // Show alert 
+          ui.showAlert('Post removed.', 'alert alert-success');
+          // Update display 
+          getPosts();
+        })
+        .catch(err => console.log(err));
+    }
+  }
+  
+  e.preventDefault();
 }
 
