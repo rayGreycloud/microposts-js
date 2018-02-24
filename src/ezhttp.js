@@ -57,4 +57,4 @@ class ezHTTP {
   }
 }
 
-export default ezHTTP;
+export const http = new ezHTTP();

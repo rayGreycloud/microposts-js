@@ -1,1 +1,11 @@
-console.log("Hola Mundo!");
+import { http } from './ezhttp';
+
+// Get posts on DOM load 
+document.addEventListener('DOMContentLoaded', getPosts);
+
+function getPosts() {
+  http.get('http://localhost:3000/posts')
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+}
+
